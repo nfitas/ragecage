@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,13 +8,17 @@ public class Throw : MonoBehaviour {
     public int strength;
     private Rigidbody ball;
 
+    private Vector3 initialPos;
 	// Use this for initialization
 	void Start () {
+        initialPos = transform.position;
+
+
         strength = 0;
         ball = GetComponent<Rigidbody>();
 
         //stop ball in the air during initial play
-        ball.useGravity = false;
+        ball.isKinematic = true;
 	}
 	
 	// Update is called once per frame
@@ -25,7 +30,20 @@ public class Throw : MonoBehaviour {
         increaseStrenght();
 
         launchBall();
+
+        reset();
 	}
+
+    void reset()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            
+            transform.position = initialPos;
+            ball.isKinematic = true;
+
+        }
+    }
 
     void decreaseStrenght(){
 
@@ -60,7 +78,7 @@ public class Throw : MonoBehaviour {
 
             Vector2 movement = new Vector2(-1.0f, 0.0f);
 
-            ball.useGravity = true;
+            ball.isKinematic = false;
             ball.AddForce(100 * strength * movement);
 
         }
