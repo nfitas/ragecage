@@ -5,14 +5,22 @@ using UnityEngine;
 
 public class Throw : MonoBehaviour {
 
-    public int strength;
+    public float strength;
+    public Boolean firstTableTouch = false;
+    public Boolean validTableTouch = false;
+    public Boolean successPlay = false;
+
     private Rigidbody ball;
 
     private Vector3 initialPos;
 	// Use this for initialization
 	void Start () {
-        initialPos = transform.position;
 
+        firstTableTouch = false;
+        validTableTouch = false;
+        successPlay = false;
+
+        initialPos = transform.position;
 
         strength = 0;
         ball = GetComponent<Rigidbody>();
@@ -38,6 +46,10 @@ public class Throw : MonoBehaviour {
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
+
+            firstTableTouch = false;
+            validTableTouch = false;
+            successPlay = false;
             
             transform.position = initialPos;
             ball.isKinematic = true;
@@ -80,6 +92,38 @@ public class Throw : MonoBehaviour {
 
             ball.isKinematic = false;
             ball.AddForce(100 * strength * movement);
+
+        }
+    }
+
+    void OnCollisionEnter(Collision col)
+    {
+
+        if (successPlay){
+            return;
+        }
+            
+
+        if (col.gameObject.name == "Table")
+        {
+
+            if (firstTableTouch == false)
+            {
+                firstTableTouch = true;
+                validTableTouch = true;
+            }
+            else
+            {
+                validTableTouch = false;
+            }
+        }
+
+        if (col.gameObject.name == "CupBase")
+        {
+            if(validTableTouch){
+
+                successPlay = true;
+            }
 
         }
     }
