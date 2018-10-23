@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Throw : MonoBehaviour {
 
@@ -9,6 +10,10 @@ public class Throw : MonoBehaviour {
     public Boolean firstTableTouch = false;
     public Boolean validTableTouch = false;
     public Boolean successPlay = false;
+    public Slider strengthSlider;
+    public int maxStrengthValue = 10;
+    public int minStrengthValue = 0;
+
 
     private Rigidbody ball;
 
@@ -27,20 +32,29 @@ public class Throw : MonoBehaviour {
 
         //stop ball in the air during initial play
         ball.isKinematic = true;
+
+        UiInit();
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    //Initializes UI
+    void UiInit () {
+        strengthSlider.maxValue = maxStrengthValue;
+        strengthSlider.minValue = minStrengthValue;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
 
 
         decreaseStrenght();
-
         increaseStrenght();
+        strengthSlider.value = strength;
 
         launchBall();
 
         reset();
-	}
+    }
 
     void reset()
     {
@@ -62,7 +76,7 @@ public class Throw : MonoBehaviour {
         //increase strenght
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            if (strength != 0)
+            if (strength > minStrengthValue)
             {
                 strength--;
                 Debug.Log("Down Arrow key was pressed.");
@@ -76,9 +90,10 @@ public class Throw : MonoBehaviour {
         //decrease strenght
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            strength++;
-            Debug.Log("Up Arrow key was pressed.");
-
+            if (strength < maxStrengthValue){
+                strength++;
+                Debug.Log("Up Arrow key was pressed.");
+            }
         }
     }
 
