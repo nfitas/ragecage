@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\_Scripts\Throw.cs" />
+    <None Include="Assets\_Shaders\NewSurfaceShader.shader" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>/Users/yannickwiggers/ragecage/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>
