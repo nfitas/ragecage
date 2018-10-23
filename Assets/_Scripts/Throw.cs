@@ -103,7 +103,7 @@ public class Throw : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Return))
         {
 
-            Vector2 movement = new Vector2(-1.0f, 0.0f);
+            Vector3 movement = new Vector3(-1.0f, 0.0f, -1.0f);
 
             ball.isKinematic = false;
             ball.AddForce(100 * strength * movement);
