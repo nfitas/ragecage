@@ -14,12 +14,23 @@ public class Throw : MonoBehaviour {
     public int maxStrengthValue = 10;
     public int minStrengthValue = 0;
 
+    private IBallInput ballInput;
+
 
     private Rigidbody ball;
 
     private Vector3 initialPos;
-	// Use this for initialization
-	void Start () {
+
+
+    private void Awake()
+    {
+        ballInput = GetComponent<IBallInput>();
+    }
+
+
+
+    // Use this for initialization
+    void Start () {
 
         firstTableTouch = false;
         validTableTouch = false;
@@ -58,7 +69,7 @@ public class Throw : MonoBehaviour {
 
     void reset()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (ballInput.restart)
         {
 
             firstTableTouch = false;
@@ -74,7 +85,7 @@ public class Throw : MonoBehaviour {
     void decreaseStrenght(){
 
         //increase strenght
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+        if (ballInput.decreaseStrenght)
         {
             if (strength > minStrengthValue)
             {
@@ -88,7 +99,7 @@ public class Throw : MonoBehaviour {
     {
 
         //decrease strenght
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (ballInput.increaseStrenght)
         {
             if (strength < maxStrengthValue){
                 strength++;
@@ -100,7 +111,7 @@ public class Throw : MonoBehaviour {
     void launchBall()
     {
         //launch ball
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (ballInput.throwBall)
         {
 
             Vector3 movement = new Vector3(-1.0f, 0.0f, -1.0f);
